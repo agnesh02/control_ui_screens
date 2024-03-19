@@ -1,155 +1,96 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:syncfusion_flutter_core/theme.dart';
-import 'package:syncfusion_flutter_sliders/sliders.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:vertical_weight_slider/vertical_weight_slider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:ui_screens/widgets/home_screen/date_weather_info.dart';
+import 'package:ui_screens/widgets/home_screen/monitoring_card.dart';
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
-
-  double _value = 40.0;
-  WeightSliderController _controller = WeightSliderController(
-      initialWeight: 40, minWeight: 0, interval: 1);
-
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  @override
-  void initState() {
-    super.initState();
-    widget._controller = WeightSliderController(
-        initialWeight: widget._value, minWeight: 0, interval: 0.1);
-  }
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SfSliderTheme(
-      data: SfSliderThemeData(
-        thumbColor: Colors.white,
-        thumbRadius: 80,
-        thumbStrokeWidth: 2,
-        activeTickColor: Colors.red,
-        inactiveTickColor: Colors.red,
-        tickOffset: const Offset(-12.0, 0.0),
-        tickSize: const Size(25.0, 1.0),
-        minorTickSize: const Size(15.0, 1.0),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 225, 233, 252),
+      body: Column(
         children: [
+          Container(
+            margin: const EdgeInsets.only(top: 40),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Home",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                FloatingActionButton.small(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
+                  backgroundColor: Color.fromARGB(255, 23, 94, 247),
+                  child: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+          ),
+          Container(
+            height: 130,
+            width: double.infinity,
+            margin: const EdgeInsets.all(20),
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Image.asset('assets/images/van.jpg', fit: BoxFit.cover),
+          ),
+          const DateWeatherInfo(),
+          const SizedBox(height: 10),
           Expanded(
-            child: SfSlider.vertical(
-              min: 0,
-              max: 100,
-              interval: 5,
-              minorTicksPerInterval: 1,
-              activeColor: Colors.white,
-              inactiveColor: Colors.white,
-              showTicks: true,
-              showLabels: false,
-              enableTooltip: false,
-              thumbIcon: SfRadialGauge(
-                axes: <RadialAxis>[
-                  RadialAxis(
-                    interval: 10,
-                    startAngle: 0,
-                    endAngle: 360,
-                    showTicks: false,
-                    showLabels: false,
-                    axisLineStyle: const AxisLineStyle(thickness: 10),
-                    pointers: <GaugePointer>[
-                      RangePointer(
-                        value: widget._value,
-                        width: 10,
-                        color: const Color(0xFFFFCD60),
-                        enableAnimation: true,
-                        cornerStyle: CornerStyle.bothCurve,
-                      )
-                    ],
-                    annotations: <GaugeAnnotation>[
-                      GaugeAnnotation(
-                        widget: Column(
-                          children: <Widget>[
-                            Container(
-                              width: 50.00,
-                              height: 50.00,
-                              decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                  image: ExactAssetImage('images/sun.png'),
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Target Temp',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${widget._value.toInt()}°F',
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        angle: 270,
-                        positionFactor: 0.1,
-                      )
-                    ],
-                  )
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: GridView.count(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+                childAspectRatio: 0.6,
+                children: const [
+                  MonitoringCard(
+                    title: "Single Zone Thermostat",
+                    tempValue: 74,
+                    indicatorValue: 1,
+                    iconData: Icons.ac_unit,
+                  ),
+                  MonitoringCard(
+                    title: "Two Stage Thermostat",
+                    tempValue: 70,
+                    indicatorValue: 12,
+                    iconData: Icons.ac_unit,
+                  ),
+                  MonitoringCard(
+                    title: "Single Zone Thermostat",
+                    tempValue: 89,
+                    indicatorValue: 123,
+                    iconData: FontAwesomeIcons.fire,
+                  ),
+                  MonitoringCard(
+                    title: "Single Zone Thermostat",
+                    tempValue: 79,
+                    indicatorValue: 123,
+                    iconData: Icons.ac_unit,
+                    isMultiMonitor: true,
+                  ),
                 ],
               ),
-              value: widget._value,
-              onChanged: (dynamic newValue) {
-                setState(() {
-                  widget._value = newValue;
-                });
-              },
             ),
           ),
-          SizedBox(
-            width: double.infinity,
-            height: 100,
-            child: VerticalWeightSlider(
-              isVertical: false,
-              controller: widget._controller,
-              decoration: const PointerDecoration(
-                width: 130.0,
-                height: 3.0,
-                largeColor: Color(0xFF898989),
-                mediumColor: Color(0xFFC5C5C5),
-                smallColor: Color(0xFFF0F0F0),
-                gap: 30.0,
-              ),
-              onChanged: (double value) {
-                setState(() {
-                  widget._value = value;
-                });
-              },
-              indicator: Container(
-                height: 3.0,
-                width: 200.0,
-                alignment: Alignment.centerLeft,
-                color: Colors.red[300],
-              ),
-            ),
-          ),
+          const SizedBox(height: 20),
         ],
       ),
     );

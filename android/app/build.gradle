@@ -59,14 +59,14 @@ android {
         }
     }
 
-     signingConfigs {
-        debug {
-            storeFile file("debug.keystore")
-            storePassword "123456"
-            keyAlias "androiddebugkey"
-            keyPassword "123456"
-        }
-    }
+    // signingConfigs {
+    //     debug {
+    //         storeFile file("debug.keystore")
+    //         storePassword "123456"
+    //         keyAlias "androiddebugkey"
+    //         keyPassword "123456"
+    //     }
+    // }
 }
 
 flutter {
